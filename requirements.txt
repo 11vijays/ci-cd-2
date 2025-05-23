@@ -1,11 +1,9 @@
 fastapi
 uvicorn
 sqlalchemy>=2.0
-asyncpg
 pydantic
 python-dotenv
 alembic
-psycopg2-binary
 pydantic[email]
 databases
 pyodbc

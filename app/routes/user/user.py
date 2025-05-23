@@ -10,7 +10,6 @@ router = APIRouter()
 async def create_user(
     user: UserCreate, service: UserService = Depends(get_user_service)
 ):
-    print(user)
     user = await service.create_user(user)
     return user
 

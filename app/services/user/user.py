@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.models.user import User
-from app.schema.user import UserCreate
+from app.schema.user import UserCreate, UserOut
 from fastapi import Depends
 from app.core import get_db
 from app.utils import db_safe
@@ -13,7 +13,7 @@ class UserService:
 
     @db_safe()
     async def create_user(self, user: UserCreate) -> User:
-        user = User(**user.dict())
+        user = User(**user.model_dump())
         self.db.add(user)
         await self.db.flush()
         await self.db.refresh(user)
@@ -22,7 +22,9 @@ class UserService:
     @db_safe()
     async def get_all_users(self) -> list[User]:
         result = await self.db.execute(select(User))
-        return result.scalars().all()
+        users = result.scalars().all()
+        user_data = [UserOut.model_validate(user).model_dump() for user in users]
+        return user_data
 
 
 async def get_user_service(
