@@ -28,7 +28,7 @@ def db_safe():
                             detail.split("Key ")[1].strip()
                             # .strip("() .")
                         )
-                        message = f"Unique constraint violated: {re.sub(error_regex,"",key_info)}"
+                        message = f"Unique constraint violated: {re.sub(error_regex,'',key_info)}"
 
                 raise HTTPException(status_code=400, detail=message)
 
