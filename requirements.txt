@@ -1,5 +1,5 @@
 fastapi
-uvicorn
+uvicorn[standard]
 sqlalchemy>=2.0
 pydantic
 python-dotenv
@@ -7,4 +7,5 @@ alembic
 pydantic[email]
 databases
 pyodbc
-aioodbc 
+aioodbc
+gunicorn
