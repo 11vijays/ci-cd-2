@@ -1,27 +1,35 @@
+name: Build and Deploy FastAPI Docker App to Azure App Service
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: ✅ Checkout code
         uses: actions/checkout@v3
 
-      - name: Azure Login
+      - name: 🔐 Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Log in to Docker Hub
+      - name: 🔐 Docker Hub Login
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Build and push Docker image
+      - name: 🐳 Build and Push Docker Image to Docker Hub
         run: |
           docker build -t vijaydev11/fastapi-app:latest .
           docker push vijaydev11/fastapi-app:latest
 
-      - name: Deploy to Azure Web App (Linux Container)
+      - name: 🚀 Deploy to Azure Web App (Linux Container)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: gategroup
-          slot-name: Production
+          app-name: gategroup # Azure Web App name
+          slot-name: Production # Or "staging" if using slot
           images: vijaydev11/fastapi-app:latest
