@@ -14,24 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: Log in to Azure Container Registry (ACR)
+      - name: Build and push Docker image to Docker Hub
         run: |
-          echo "${{ secrets.ACR_PASSWORD }}" | docker login gategroup.azurecr.io \
-            -u ${{ secrets.ACR_USERNAME }} --password-stdin
-
-      - name: Build and push Docker image to ACR
-        run: |
-          docker build -t gategroup.azurecr.io/fastapi-app:latest .
-          docker push gategroup.azurecr.io/fastapi-app:latest
+          docker build -t vijaydev11/fastapi-app:latest .
+          docker push vijaydev11/fastapi-app:latest
 
       - name: Deploy to Azure Web App (Linux Container)
         uses: azure/webapps-deploy@v2
         with:
           app-name: gategroup
           slot-name: Production
-          images: gategroup.azurecr.io/fastapi-app:latest
+          images: vijaydev11/fastapi-app:latest
