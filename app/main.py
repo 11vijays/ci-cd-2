@@ -10,13 +10,13 @@ from app.utils import error_response
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # try:
-    #     async with engine.begin() as conn:
-    #         await conn.execute(text("select 1"))
-    #         print("DB connected")
-    # except Exception as e:
-    #     print("failed to connect")
-    #     raise e
+    try:
+        async with engine.begin() as conn:
+            await conn.execute(text("select 1"))
+            print("DB connected")
+    except Exception as e:
+        print("failed to connect")
+        raise e
     yield
 
 

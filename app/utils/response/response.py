@@ -7,6 +7,7 @@ def success_response(data: Any, status_code: int = 200):
         status_code=status_code,
         content={
             "status": "success",
+            "code": status_code,
             "data": data,
         },
     )
@@ -18,7 +19,7 @@ def error_response(message: str, status_code: int = 400, error: str = ""):
         content={
             "status": "error",
             "message": message,
-            "status_code": status_code,
+            "code": status_code,
             **({"error": error} if error else {}),
         },
     )
