@@ -21,17 +21,17 @@ jobs:
 
       - name: Log in to Azure Container Registry (ACR)
         run: |
-          echo "${{ secrets.ACR_PASSWORD }}" | docker login myregistry123.azurecr.io \
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login gategroup.azurecr.io \
             -u ${{ secrets.ACR_USERNAME }} --password-stdin
 
       - name: Build and push Docker image to ACR
         run: |
-          docker build -t myregistry123.azurecr.io/fastapi-app:latest .
-          docker push myregistry123.azurecr.io/fastapi-app:latest
+          docker build -t gategroup.azurecr.io/fastapi-app:latest .
+          docker push gategroup.azurecr.io/fastapi-app:latest
 
       - name: Deploy to Azure Web App (Linux Container)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: gategroup # 🔁 Replace with your App Service name
+          app-name: gategroup # 👈 Replace if your App Service name is different from ACR
           slot-name: Production
-          images: myregistry123.azurecr.io/fastapi-app:latest
+          images: gategroup.azurecr.io/fastapi-app:latest
