@@ -44,7 +44,7 @@ async def custom_http_exception_handle(req: Request, exc: StarletteHTTPException
 
 @app.get("/health")
 def health_check():
-    return {"status": "Health is ok"}
+    return {"status": "Health check path is ok"}
 
 
 app.include_router(v1_router, prefix="/api/v1")

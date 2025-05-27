@@ -32,6 +32,6 @@ jobs:
       - name: Deploy to Azure Web App (Linux Container)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: gategroup # 👈 Replace if your App Service name is different from ACR
+          app-name: gategroup
           slot-name: Production
           images: gategroup.azurecr.io/fastapi-app:latest
