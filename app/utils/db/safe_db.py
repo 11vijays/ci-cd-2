@@ -21,14 +21,13 @@ def db_safe():
                 await self.db.rollback()
                 logger.warning(f"IntegrityError in {func.__name__}: {str(e)}")
                 detail = str(e.orig)
+                print("DEBUG", detail)
                 message = "unique constrained voilated"
-                if "duplicate key value violates unique constraint" in detail:
-                    if "Key" in detail and "=" in detail:
-                        key_info = (
-                            detail.split("Key ")[1].strip()
-                            # .strip("() .")
-                        )
-                        message = f"Unique constraint violated: {re.sub(error_regex,'',key_info)}"
+                if "Cannot insert duplicate key row" in detail:
+                    match = re.search(r"The duplicate key value is \((.*?)\)", detail)
+                    if match:
+                        duplicate_value = match.group(1)
+                        message = f"Duplicate entry for: {duplicate_value}"
 
                 raise HTTPException(status_code=400, detail=message)
 

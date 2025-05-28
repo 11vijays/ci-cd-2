@@ -17,7 +17,7 @@ class UserService:
         self.db.add(user)
         await self.db.flush()
         await self.db.refresh(user)
-        return user
+        return UserOut.model_validate(user).model_dump()
 
     @db_safe()
     async def get_all_users(self) -> list[User]:
