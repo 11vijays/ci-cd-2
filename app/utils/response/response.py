@@ -1,13 +1,36 @@
 from fastapi.responses import JSONResponse
 from typing import Any
 
+ACTIONS = {
+    "POST": "created",
+    "PUT": "updated",
+    "PATCH": "modified",
+    "DELETE": "deleted",
+    "GET": "retrieved",
+    "UPLOAD": "uploaded",
+    "DEFAULT": "processed",
+}
 
-def success_response(data: Any, status_code: int = 200):
+HTTP_METHODS = {
+    "CREATE": "POST",
+    "UPDATE": "PUT",
+    "MODIFY": "PATCH",
+    "DELETE": "DELETE",
+    "FETCH": "GET",
+    "UPLOAD": "UPLOAD",
+}
+
+
+def success_response(
+    data: Any, method: str, entity: str, status_code: int = 200
+) -> dict:
+    action = ACTIONS.get(method, ACTIONS["DEFAULT"])
     return JSONResponse(
         status_code=status_code,
         content={
             "status": "success",
             "code": status_code,
+            "message": f"{entity} {action} successfully",
             "data": data,
         },
     )
