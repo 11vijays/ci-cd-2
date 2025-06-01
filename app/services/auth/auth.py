@@ -1,4 +1,4 @@
-from app.schema.auth import LoginRequest, TokenResponse
+from app.schemas.auth import LoginRequest, TokenResponse
 from msal import ConfidentialClientApplication
 from app.core import settings
 

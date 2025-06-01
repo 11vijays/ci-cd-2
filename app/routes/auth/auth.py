@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Request
-from app.schema.auth import TokenResponse, LoginRequest
+from app.schemas.auth import TokenResponse, LoginRequest
 from app.services.auth import AuthService, get_auth_service
 
 router = APIRouter()

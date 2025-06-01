@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.schema.user import UserOut, UserCreate
+from app.schemas.user import UserOut, UserCreate
 from app.services.user import UserService, get_user_service
 from app.utils import success_response, HTTP_METHODS
 
